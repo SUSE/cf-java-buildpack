@@ -15,4 +15,4 @@
 
 # Repository configuration
 ---
-default_repository_root: https://java-buildpack.cloudfoundry.org
+default_repository_root: https://suse-cf-java-buildpack.s3.amazonaws.com/
