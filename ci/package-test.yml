@@ -22,12 +22,12 @@ image_resource:
 
 inputs:
 - name: java-buildpack
-outputs:
-- name: build
-
 
 caches:
 - path: gems
+
+outputs:
+- name: package-built
 
 run:
   path: java-buildpack/ci/package-test.sh
