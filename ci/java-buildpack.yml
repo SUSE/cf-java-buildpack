@@ -14,29 +14,29 @@ resources:
     username: {{docker-username}}
     password: {{docker-password}}
     email: cf-ci-bot@suse.de
-  
+
 - name: ubuntu-trusty
   type: docker-image
   source:
     repository: ubuntu
     tag: latest
-  
-- name: java-buildpack-offline
-  type: s3
-  source:
-    bucket: {{java-buildpack-s3-bucket}}
-    regexp: java-buildpack-offline-v(.*).zip
-    access_key_id: {{aws-access-key}}
-    secret_access_key: {{aws-secret-key}}
 
-- name: java-buildpack-online
+- name: s3.buildpack-rc-offline
   type: s3
   source:
     bucket: {{java-buildpack-s3-bucket}}
-    regexp: java-buildpack-v(.*).zip
     access_key_id: {{aws-access-key}}
     secret_access_key: {{aws-secret-key}}
-    
+    regexp: buildpack-release-candidates/java/java-buildpack-offline-v(.*).zip
+
+- name: s3.buildpack-rc-online
+  type: s3
+  source:
+    bucket: {{java-buildpack-s3-bucket}}
+    access_key_id: {{aws-access-key}}
+    secret_access_key: {{aws-secret-key}}
+    regexp: buildpack-release-candidates/java/java-buildpack-v(.*).zip
+
 groups:
 - name: docker
   jobs:
@@ -104,10 +104,12 @@ jobs:
   - do:
     - task: package-test
       file: java-buildpack/ci/package-test.yml
-    - put: java-buildpack-online
+    - task: checksum-package
+      file: java-buildpack/ci/checksum-package.yml
+    - put: s3.buildpack-rc-online
       params:
-        file: build/java-buildpack-*.zip
-
+        file: package-tagged/java-buildpack-*.zip
+        acl: public-read
 - name: java-package-offline
   plan:
   - aggregate:
@@ -123,6 +125,9 @@ jobs:
       params:
         OFFLINE: true
         PINNED: true
-    - put: java-buildpack-offline
+    - task: checksum-package
+      file: java-buildpack/ci/checksum-package.yml
+    - put: s3.buildpack-rc-offline
       params:
-        file: build/java-buildpack-offline-*.zip
+        file: package-tagged/java-buildpack-offline-*.zip
+        acl: public-read
