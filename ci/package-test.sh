@@ -28,4 +28,4 @@ pushd java-buildpack
   bundle exec rake package
 popd
 
-cp java-buildpack/build/java-buildpack-*.zip build/
+cp java-buildpack/build/*.zip package-built/
