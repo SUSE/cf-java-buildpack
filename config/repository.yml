@@ -15,4 +15,4 @@
 
 # Repository configuration
 ---
-default_repository_root: https://minio.from-the.cloud:9000/java-buildpack
+default_repository_root: https://suse-cf-java-buildpack.s3.amazonaws.com/
