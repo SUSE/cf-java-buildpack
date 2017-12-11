@@ -56,7 +56,7 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.2.7
+        RBENV_VERSION: 2.2.8
 - name: java-unit-2.3
   plan:
   - aggregate:
@@ -66,7 +66,7 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.3.4
+        RBENV_VERSION: 2.3.5
 - name: java-unit-2.4
   plan:
   - aggregate:
@@ -76,7 +76,7 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.4.1
+        RBENV_VERSION: 2.4.2
 - name: java-package-online
   plan:
   - aggregate:
