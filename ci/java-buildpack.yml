@@ -21,6 +21,21 @@ resources:
     repository: ubuntu
     tag: latest
   
+- name: java-buildpack-offline
+  type: s3
+  source:
+    bucket: {{java-buildpack-s3-bucket}}
+    regexp: java-buildpack-offline-v(.*).zip
+    access_key_id: {{aws-access-key}}
+    secret_access_key: {{aws-secret-key}}
+
+- name: java-buildpack-online
+  type: s3
+  source:
+    bucket: {{java-buildpack-s3-bucket}}
+    regexp: java-buildpack-v(.*).zip
+    access_key_id: {{aws-access-key}}
+    secret_access_key: {{aws-secret-key}}
     
 groups:
 - name: docker
@@ -89,6 +104,10 @@ jobs:
   - do:
     - task: package-test
       file: java-buildpack/ci/package-test.yml
+    - put: java-buildpack-online
+      params:
+        file: build/java-buildpack-*.zip
+
 - name: java-package-offline
   plan:
   - aggregate:
@@ -104,3 +123,6 @@ jobs:
       params:
         OFFLINE: true
         PINNED: true
+    - put: java-buildpack-offline
+      params:
+        file: build/java-buildpack-offline-*.zip
