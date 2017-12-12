@@ -1,2 +1,3 @@
 ---
 java-buildpack-git-uri: git@github.com:SUSE/cf-java-buildpack
+java-buildpack-s3-bucket: cf-opensusefs2
