@@ -43,9 +43,9 @@ groups:
   - docker-image
 - name: java-buildpack
   jobs:
-  - java-unit-2.2
   - java-unit-2.3
   - java-unit-2.4
+  - java-unit-2.5
   - java-package-online
   - java-package-offline
 
@@ -62,7 +62,7 @@ jobs:
     - put: java-buildpack-latest
       params:
         build: docker-image/ci/docker-image
-- name: java-unit-2.2
+- name: java-unit-2.5
   plan:
   - aggregate:
     - get: java-buildpack
@@ -71,7 +71,7 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.2.8
+        RBENV_VERSION: 2.5.0
 - name: java-unit-2.3
   plan:
   - aggregate:
@@ -81,7 +81,7 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.3.5
+        RBENV_VERSION: 2.3.6
 - name: java-unit-2.4
   plan:
   - aggregate:
@@ -91,16 +91,16 @@ jobs:
     - task: unit-test
       file: java-buildpack/ci/unit-test.yml
       params:
-        RBENV_VERSION: 2.4.2
+        RBENV_VERSION: 2.4.3
 - name: java-package-online
   plan:
   - aggregate:
     - get: java-buildpack
       trigger: true
       passed:
-      - java-unit-2.2
       - java-unit-2.3
       - java-unit-2.4
+      - java-unit-2.5
   - do:
     - task: package-test
       file: java-buildpack/ci/package-test.yml
@@ -116,9 +116,9 @@ jobs:
     - get: java-buildpack
       trigger: true
       passed:
-      - java-unit-2.2
       - java-unit-2.3
       - java-unit-2.4
+      - java-unit-2.5
   - do:
     - task: package-test
       file: java-buildpack/ci/package-test.yml
