@@ -93,7 +93,7 @@ module JavaBuildpack
           `lsb_release -cs`.strip
         # Treat openSUSE and SLE stacks as supported
         elsif File.exist?('/etc/os-release') && File.read('/etc/os-release') =~ /SUSE/
-          'trusty'
+          'bionic'
         else
           raise 'Unable to determine platform'
         end
