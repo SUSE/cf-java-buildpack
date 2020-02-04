@@ -91,6 +91,9 @@ module JavaBuildpack
           'mountainlion'
         elsif !`which lsb_release 2> /dev/null`.empty?
           `lsb_release -cs`.strip
+        # Treat openSUSE and SLE stacks as supported
+        elsif File.exist?('/etc/os-release') && File.read('/etc/os-release') =~ /SUSE/
+          'bionic'
         else
           raise 'Unable to determine platform'
         end
