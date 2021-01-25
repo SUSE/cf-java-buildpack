@@ -1,2 +1,4 @@
 ---
-version: v4.36
+hash: 8c6fb63f
+remote: git@github.com:SUSE/cf-java-buildpack.git
+version: v4.36.0.1
